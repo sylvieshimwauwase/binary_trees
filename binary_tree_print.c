@@ -3,17 +3,15 @@
 #include <string.h>
 #include "binary_trees.h"
 
-/* Original code from http://stackoverflow.com/a/13755911/5184480 */
-
 /**
  * print_t - Stores recursively each level in an array of strings
  *
- * @tree: Pointer to the node to print
- * @offset: Offset to print
- * @depth: Depth of the node
- * @s: Buffer
+ * @tree: node to print
+ * @offst: print
+ * @depth: Depth of node
+ * @s: loca
  *
- * Return: length of printed tree after process
+ * Return: length of printed tree
  */
 static int print_t(const binary_tree_t *tree, int offset, int depth, char **s)
 {
@@ -50,14 +48,14 @@ static int print_t(const binary_tree_t *tree, int offset, int depth, char **s)
  *
  * Return: The height of the tree starting at @node
  */
-static size_t _height(const binary_tree_t *tree)
+static size_t height(const binary_tree_t *tree)
 {
 	size_t height_l;
 	size_t height_r;
 
-	height_l = tree->left ? 1 + _height(tree->left) : 0;
-	height_r = tree->right ? 1 + _height(tree->right) : 0;
-	return (height_l > height_r ? height_l : height_r);
+	l_height = tree->left ? 1 + height(tree->left) : 0;
+	r_height = tree->right ? 1 + height(tree->right) : 0;
+	return (l_height > r_height ? l_height : r_height);
 }
 
 /**
@@ -68,15 +66,15 @@ static size_t _height(const binary_tree_t *tree)
 void binary_tree_print(const binary_tree_t *tree)
 {
 	char **s;
-	size_t height, i, j;
+	size_t hgt, i, j;
 
 	if (!tree)
 		return;
-	height = _height(tree);
-	s = malloc(sizeof(*s) * (height + 1));
+	hgt = height(tree);
+	s = malloc(sizeof(*s) * (hgt + 1));
 	if (!s)
 		return;
-	for (i = 0; i < height + 1; i++)
+	for (i = 0; i < hgt + 1; i++)
 	{
 		s[i] = malloc(sizeof(**s) * 255);
 		if (!s[i])
@@ -84,7 +82,7 @@ void binary_tree_print(const binary_tree_t *tree)
 		memset(s[i], 32, 255);
 	}
 	print_t(tree, 0, 0, s);
-	for (i = 0; i < height + 1; i++)
+	for (i = 0; i < hgt + 1; i++)
 	{
 		for (j = 254; j > 1; --j)
 		{
